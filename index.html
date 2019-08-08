@@ -36,65 +36,90 @@
         content: "\f005 \f005 \f005 \f005 \f005";
         font-family: "Font Awesome 5 Free";
         font-weight: 900;
-        color: rgb(92, 83, 100);
+        color: #ccc;
+      }
+
+      .stars-inner::before {
+        content: "\f005 \f005 \f005 \f005 \f005";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        color: #e4fd02;
       }
     </style>
   </head>
   <body>
-    <div class="container">
+    <div class="container mt-5">
+      <div class="form-group">
+        <select id="product-select" class="form-control custom-select">
+          <option value="0" disabled selected>Select Programs</option>
+          <option value="HTML">HTML</option>
+          <option value="Css">CSS</option>
+          <option value="javascript">javascript</option>
+          <option value="Docker">Docker</option>
+          <option value="React">React</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <input
+          type="number"
+          id="rating-control"
+          class="form-control"
+          step="0.1"
+          max="5"
+          placeholder="Rate 1 - 5"
+          disabled
+        />
+      </div>
       <table class="table table-striped">
         <thead>
           <tr>
-            <th>4k television</th>
-            <i class="fab fa-accusoft"></i>
-            <i class="fab fa-accusoft"></i>
-            <i class="fas fa-star"></i>
-
+            <th>Programs in web development</th>
             <th>Raiting</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="sony">
-            <td>sony 4k TV</td>
+          <tr class="HTML">
+            <td>HTML</td>
             <td>
               <div class="stars-outer">
-                <div class="start-inner"></div>
+                <div class="stars-inner"></div>
               </div>
               <span class="number-rating"></span>
             </td>
           </tr>
-          <tr class="Sumsung">
-            <td>sumsung 4k TV</td>
+          <tr class="CSS">
+            <td>CSS</td>
             <td>
               <div class="stars-outer">
-                <div class="start-inner"></div>
+                <div class="stars-inner"></div>
               </div>
               <span class="number-rating"></span>
             </td>
           </tr>
-          <tr class="vizio">
-            <td>vizio 4k TV</td>
+          <tr class="javascript">
+            <td>javascript</td>
             <td>
               <div class="stars-outer">
-                <div class="start-inner"></div>
+                <div class="stars-inner"></div>
               </div>
               <span class="number-rating"></span>
             </td>
           </tr>
-          <tr class="panasonic">
-            <td>panasonic 4k TV</td>
+          <tr class="React">
+            <td>React</td>
             <td>
               <div class="stars-outer">
-                <div class="start-inner"></div>
+                <div class="stars-inner"></div>
               </div>
               <span class="number-rating"></span>
             </td>
           </tr>
-          <tr class="phillips">
-            <td>phillips 4k TV</td>
+          <tr class="Docker">
+            <td>Docker</td>
             <td>
               <div class="stars-outer">
-                <div class="start-inner"></div>
+                <div class="stars-inner"></div>
               </div>
               <span class="number-rating"></span>
             </td>
@@ -105,11 +130,11 @@
     <script>
       //ratings
       const ratings = {
-        sonny: 4.7,
-        sumsung: 3.4,
-        vizio: 2.3,
-        panasonic: 3.6,
-        phillips: 4.1
+        HTML: 4.7,
+        CSS: 3.4,
+        javascript: 2.3,
+        React: 3.6,
+        Docker: 4.7
       };
 
       //total stars
@@ -119,20 +144,43 @@
       //run func when dom loads;
       document.addEventListener("DOMContentLoaded", getRatings);
 
-      //get ratings
+      //Form elements
+      const productSelect = document.getElementById("product-select");
+      const ratingControl = document.getElementById("rating-control");
+
+      //init product
+      let product;
+
+      //product select change
+      productSelect.addEventListener("change", e => {
+        product = e.target.value;
+        ratingControl.disabled = false;
+        ratingControl.value = ratings[product];
+      });
+
+      //rating control change
+      ratingControl.addEventListener("blur", e => {
+        const rating = e.target.value;
+        if (rating > 5) {
+          alert("please rate 1 to 5, thank you :) ");
+          return;
+        }
+      });
+
+      // Get ratings
       function getRatings() {
         for (let rating in ratings) {
+          // Get percentage
           const starPercentage = (ratings[rating] / starsTotal) * 100;
-          // round to nearest 10
+
+          // Round to nearest 10
           const starPercentageRounded = `${Math.round(starPercentage / 10) *
-            10}% `;
-          //   console.log(starPercentageRounded);
+            10}%`;
 
-          //set width of stars-inner to %
-
+          // Set width of stars-inner to percentage
           document.querySelector(
             `.${rating} .stars-inner`
-          ).style.width = starPercentageRoundeds;
+          ).style.width = starPercentageRounded;
         }
       }
     </script>
