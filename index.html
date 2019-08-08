@@ -49,6 +49,7 @@
   </head>
   <body>
     <div class="container mt-5">
+      <h6>Programs in web development</h6>
       <div class="form-group">
         <select id="product-select" class="form-control custom-select">
           <option value="0" disabled selected>Select Programs</option>
@@ -74,7 +75,7 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            <th>Programs in web development</th>
+            <th>Programs</th>
             <th>Raiting</th>
           </tr>
         </thead>
@@ -131,7 +132,7 @@
       //ratings
       const ratings = {
         HTML: 4.7,
-        CSS: 3.4,
+        CSS: 1.4,
         javascript: 2.3,
         React: 3.6,
         Docker: 4.7
@@ -165,6 +166,9 @@
           alert("please rate 1 to 5, thank you :) ");
           return;
         }
+        //change rating
+        ratings[product] = rating;
+        getRatings();
       });
 
       // Get ratings
@@ -181,6 +185,10 @@
           document.querySelector(
             `.${rating} .stars-inner`
           ).style.width = starPercentageRounded;
+
+          //add number rating
+          document.querySelector(`.${rating} .number-rating`).innerHTML =
+            ratings[rating];
         }
       }
     </script>
